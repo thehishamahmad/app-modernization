@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="stylesheet" href="style.css?v=4" />
 </head>
 
 <body>
@@ -59,8 +59,9 @@
 
     <p class="section-intro">
       This advisor helps evaluate whether an existing VM-hosted application is ready to be
-      modernized into containers. It reviews application structure, state handling, storage
-      dependency, startup behavior, operating system dependency, traffic profile, and platform fit.
+      modernized into containers. It reviews application structure, protocol requirements,
+      state handling, storage dependency, operating system dependency, compliance needs,
+      operational maturity, and modernization goals.
     </p>
   </section>
 
@@ -82,24 +83,24 @@
       <div class="feature-card">
         <h3>Reduce Migration Risk</h3>
         <p>
-          Applications with local state, OS dependency, slow startup, or tight coupling may fail
-          if moved too quickly into containers.
+          Applications with local state, OS dependency, custom protocol needs, or tight coupling may
+          fail if moved too quickly into containers.
         </p>
       </div>
 
       <div class="feature-card">
         <h3>Guide Cloud Run vs GKE</h3>
         <p>
-          Simple stateless web applications may fit Cloud Run, while multi-component workloads may
-          require GKE Autopilot.
+          Simple stateless web applications may fit Cloud Run, while more complex workloads may
+          require GKE Autopilot or a phased modernization approach.
         </p>
       </div>
 
       <div class="feature-card">
-        <h3>Support Discovery Workshop</h3>
+        <h3>Support Business Discussion</h3>
         <p>
-          The result can be used as an early discussion input for application discovery,
-          modernization planning, and sizing.
+          The result can support discovery workshops, modernization planning, cost discussions,
+          DevOps readiness review, and compliance conversations.
         </p>
       </div>
     </div>
@@ -113,34 +114,34 @@
 
     <div class="feature-grid">
       <div class="feature-card">
-        <h3>State & Storage</h3>
+        <h3>Architecture Pattern</h3>
         <p>
-          Determines whether user sessions, files, or runtime data are stored externally or tied
-          directly to the VM.
+          Identifies whether the application is Monolith, N-Tier, or Microservices to determine the
+          right modernization path.
         </p>
       </div>
 
       <div class="feature-card">
-        <h3>Runtime Dependency</h3>
+        <h3>Runtime & Protocol</h3>
         <p>
-          Checks whether the application depends heavily on OS-level settings, drivers, local
-          services, or system packages.
+          Checks whether the workload depends on HTTP/gRPC or requires custom TCP, UDP, or proprietary
+          protocols.
         </p>
       </div>
 
       <div class="feature-card">
-        <h3>Application Structure</h3>
+        <h3>Compliance & Isolation</h3>
         <p>
-          Reviews whether the application is a single service, a few components, or a tightly
-          connected legacy stack.
+          Reviews whether the workload has strict isolation or regulatory requirements that may limit
+          platform choices.
         </p>
       </div>
 
       <div class="feature-card">
-        <h3>Scaling Behavior</h3>
+        <h3>Operational Readiness</h3>
         <p>
-          Evaluates whether the workload can scale dynamically, handle bursty traffic, or must
-          remain always on.
+          Evaluates whether the team has the right DevOps maturity to manage GKE, or whether a more
+          managed platform such as Cloud Run is more suitable.
         </p>
       </div>
     </div>
@@ -161,42 +162,45 @@
       <form id="advisorForm">
 
         <div class="question-group">
-          <h3>01. Application State & Access</h3>
+          <h3>01. Application State & Protocol</h3>
 
           <div class="field-grid">
             <div class="field">
               <label>Does your application store user data, sessions, or files directly on the server it runs on?</label>
               <select name="stateHandling">
                 <option value="">Select</option>
-                <option value="20">No, everything is stored externally</option>
-                <option value="5">Some data is stored locally</option>
-                <option value="-20">Yes, most data is stored on the server itself</option>
+                <option value="cloudrun:20,gke:10,vm:0">No, everything is stored externally</option>
+                <option value="cloudrun:5,gke:10,vm:5">Some data is stored locally</option>
+                <option value="cloudrun:-25,gke:-5,vm:20">Yes, most data is stored on the server itself</option>
               </select>
             </div>
 
             <div class="field">
-              <label>Is the application accessed through HTTP or HTTPS?</label>
-              <select name="httpAccess">
+              <label>Does the application use protocols other than HTTP/gRPC, such as UDP, custom TCP, or proprietary protocols?</label>
+              <select name="protocol">
                 <option value="">Select</option>
-                <option value="20">Yes</option>
-                <option value="5">Partially</option>
-                <option value="-10">No</option>
+                <option value="cloudrun:20,gke:10,vm:0">No, it mainly uses HTTP/gRPC</option>
+                <option value="cloudrun:0,gke:15,vm:10">Some non-HTTP/gRPC communication is required</option>
+                <option value="cloudrun:-30,gke:10,vm:25">Yes, it depends heavily on custom TCP, UDP, or proprietary protocols</option>
               </select>
+              <p class="field-desc">
+                Cloud Run is best suited for request-based HTTP/gRPC workloads. Applications that depend on custom TCP, UDP, or proprietary protocols may be better suited for GKE or Compute Engine.
+              </p>
             </div>
           </div>
         </div>
 
         <div class="question-group">
-          <h3>02. Storage & OS Dependency</h3>
+          <h3>02. Storage & Operating System Dependency</h3>
 
           <div class="field-grid">
             <div class="field">
               <label>Does the application require persistent local disk storage?</label>
               <select name="localDisk">
                 <option value="">Select</option>
-                <option value="15">No</option>
-                <option value="-10">Only temporary files</option>
-                <option value="-25">Yes, persistent local files are required</option>
+                <option value="cloudrun:15,gke:10,vm:0">No</option>
+                <option value="cloudrun:-5,gke:5,vm:10">Only temporary files</option>
+                <option value="cloudrun:-25,gke:-5,vm:20">Yes, persistent local files are required</option>
               </select>
             </div>
 
@@ -204,10 +208,13 @@
               <label>Is your application tightly integrated with the underlying operating system?</label>
               <select name="osDependency">
                 <option value="">Select</option>
-                <option value="15">No</option>
-                <option value="-10">Some dependency</option>
-                <option value="-30">Yes, strong OS dependency</option>
+                <option value="cloudrun:15,gke:10,vm:0">No</option>
+                <option value="cloudrun:-5,gke:5,vm:15">Some dependency</option>
+                <option value="cloudrun:-30,gke:-5,vm:25">Yes, strong OS dependency</option>
               </select>
+              <p class="field-desc">
+                Examples include specific OS settings, drivers, system packages, registry settings, local services, or server-level configuration.
+              </p>
             </div>
           </div>
         </div>
@@ -216,39 +223,38 @@
           <h3>03. Application Structure</h3>
 
           <div class="field-grid">
-            <div class="field">
+            <div class="field full-width">
               <label>How is your application structured today?</label>
               <select name="appStructure">
                 <option value="">Select</option>
-                <option value="20">Single application, such as one web app or one API</option>
-                <option value="10">A few components, such as web app, backend, and worker</option>
-                <option value="-5">Multiple tightly connected components</option>
+                <option value="cloudrun:0,gke:5,vm:20">Monolith</option>
+                <option value="cloudrun:5,gke:15,vm:10">N-Tier</option>
+                <option value="cloudrun:15,gke:20,vm:0">Microservices</option>
               </select>
+
+              <div class="architecture-help">
+                <div>
+                  <strong>Monolith</strong>
+                  <p>A single application where most functions are tightly combined into one system.</p>
+                </div>
+                <div>
+                  <strong>N-Tier</strong>
+                  <p>The application is separated into layers such as web, application logic, and database.</p>
+                </div>
+                <div>
+                  <strong>Microservices</strong>
+                  <p>The application is broken into multiple independent services that can be deployed separately.</p>
+                </div>
+              </div>
             </div>
 
             <div class="field">
               <label>Does the application run background jobs, batch processes, or scheduled tasks?</label>
               <select name="backgroundJobs">
                 <option value="">Select</option>
-                <option value="10">No</option>
-                <option value="0">Yes, but they can be separated</option>
-                <option value="-15">Yes, and they are tightly coupled with the application</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="question-group">
-          <h3>04. Traffic, Startup & Networking</h3>
-
-          <div class="field-grid">
-            <div class="field">
-              <label>How does the application traffic behave?</label>
-              <select name="trafficPattern">
-                <option value="">Select</option>
-                <option value="20">Variable or bursty traffic</option>
-                <option value="10">Steady traffic</option>
-                <option value="-5">Requires fixed always-on capacity</option>
+                <option value="cloudrun:10,gke:5,vm:0">No</option>
+                <option value="cloudrun:5,gke:15,vm:5">Yes, but they can be separated</option>
+                <option value="cloudrun:-15,gke:5,vm:15">Yes, and they are tightly coupled with the application</option>
               </select>
             </div>
 
@@ -256,9 +262,25 @@
               <label>How long does your application take to start and become ready to serve requests?</label>
               <select name="startupTime">
                 <option value="">Select</option>
-                <option value="15">Fast, within a few seconds</option>
-                <option value="5">Moderate, around 10 to 30 seconds</option>
-                <option value="-15">Slow, more than 30 seconds</option>
+                <option value="cloudrun:15,gke:10,vm:0">Fast, within a few seconds</option>
+                <option value="cloudrun:5,gke:10,vm:5">Moderate, around 10 to 30 seconds</option>
+                <option value="cloudrun:-15,gke:0,vm:15">Slow, more than 30 seconds</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-group">
+          <h3>04. Traffic, Networking & Availability</h3>
+
+          <div class="field-grid">
+            <div class="field">
+              <label>How does the application traffic behave?</label>
+              <select name="trafficPattern">
+                <option value="">Select</option>
+                <option value="cloudrun:20,gke:10,vm:0">Variable or bursty traffic</option>
+                <option value="cloudrun:10,gke:10,vm:5">Steady traffic</option>
+                <option value="cloudrun:-5,gke:10,vm:15">Requires fixed always-on capacity</option>
               </select>
             </div>
 
@@ -266,9 +288,9 @@
               <label>Does the application require custom networking or complex internal routing?</label>
               <select name="networking">
                 <option value="">Select</option>
-                <option value="15">No, simple public or private access is enough</option>
-                <option value="5">Some private connectivity is required</option>
-                <option value="-10">Yes, complex internal routing is required</option>
+                <option value="cloudrun:15,gke:10,vm:0">No, simple public or private access is enough</option>
+                <option value="cloudrun:5,gke:15,vm:5">Some private connectivity is required</option>
+                <option value="cloudrun:-10,gke:20,vm:10">Yes, complex internal routing is required</option>
               </select>
             </div>
 
@@ -276,9 +298,45 @@
               <label>Does your application require always-on availability and cannot scale down when idle?</label>
               <select name="alwaysOn">
                 <option value="">Select</option>
-                <option value="20">No, it can scale down when idle</option>
-                <option value="5">Sometimes required</option>
-                <option value="-15">Yes, it must always be running</option>
+                <option value="cloudrun:20,gke:5,vm:0">No, it can scale down when idle</option>
+                <option value="cloudrun:5,gke:10,vm:10">Sometimes required</option>
+                <option value="cloudrun:-15,gke:15,vm:20">Yes, it must always be running</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-group">
+          <h3>05. Compliance, Operations & Business Goal</h3>
+
+          <div class="field-grid">
+            <div class="field">
+              <label>Does the application require hardware isolation, sole-tenant hosting, or regulatory controls that restrict shared kernel environments?</label>
+              <select name="complianceIsolation">
+                <option value="">Select</option>
+                <option value="cloudrun:15,gke:10,vm:0">No special isolation requirement</option>
+                <option value="cloudrun:0,gke:15,vm:15">Some regulatory or isolation requirement</option>
+                <option value="cloudrun:-30,gke:10,vm:30">Yes, strict isolation or shared-kernel restriction applies</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>How large is your DevOps or platform team for managing infrastructure?</label>
+              <select name="opsMaturity">
+                <option value="">Select</option>
+                <option value="cloudrun:20,gke:-5,vm:0">Small team or limited Kubernetes experience</option>
+                <option value="cloudrun:10,gke:10,vm:5">Moderate team with some container experience</option>
+                <option value="cloudrun:5,gke:20,vm:5">Strong DevOps team with Kubernetes experience</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>What is the main modernization goal?</label>
+              <select name="modernizationGoal">
+                <option value="">Select</option>
+                <option value="cloudrun:20,gke:10,vm:-5">Cost Optimization</option>
+                <option value="cloudrun:15,gke:20,vm:-5">Faster Feature Delivery</option>
+                <option value="cloudrun:0,gke:10,vm:20">Stability of Existing System</option>
               </select>
             </div>
           </div>
@@ -381,18 +439,34 @@
     return Math.max(min, Math.min(max, value));
   }
 
+  function parseScore(value) {
+    const scores = { cloudrun: 0, gke: 0, vm: 0 };
+
+    value.split(",").forEach(part => {
+      const [key, rawValue] = part.split(":");
+      scores[key.trim()] = Number(rawValue);
+    });
+
+    return scores;
+  }
+
   function calculateModernization() {
     const form = document.getElementById("advisorForm");
     const selects = form.querySelectorAll("select");
 
-    let rawScore = 0;
     let completed = true;
+    let cloudRunRaw = 0;
+    let gkeRaw = 0;
+    let vmRaw = 0;
 
     selects.forEach(select => {
       if (select.value === "") {
         completed = false;
       } else {
-        rawScore += Number(select.value);
+        const score = parseScore(select.value);
+        cloudRunRaw += score.cloudrun;
+        gkeRaw += score.gke;
+        vmRaw += score.vm;
       }
     });
 
@@ -401,26 +475,11 @@
       return;
     }
 
-    const maxScore = 175;
-    const normalized = clamp(Math.round((rawScore / maxScore) * 100), 0, 100);
+    const cloudRunFit = clamp(Math.round(((cloudRunRaw + 135) / 285) * 100), 0, 100);
+    const gkeFit = clamp(Math.round(((gkeRaw + 30) / 230) * 100), 0, 100);
+    const vmFit = clamp(Math.round(((vmRaw + 20) / 260) * 100), 0, 100);
 
-    let cloudRunFit = 0;
-    let gkeFit = 0;
-    let vmFit = 0;
-
-    if (normalized >= 75) {
-      cloudRunFit = normalized;
-      gkeFit = clamp(100 - normalized + 35, 0, 100);
-      vmFit = clamp(100 - normalized, 5, 35);
-    } else if (normalized >= 45) {
-      gkeFit = normalized;
-      cloudRunFit = clamp(normalized - 20, 10, 70);
-      vmFit = clamp(100 - normalized, 20, 65);
-    } else {
-      vmFit = clamp(100 - normalized, 55, 100);
-      gkeFit = clamp(normalized, 10, 55);
-      cloudRunFit = clamp(normalized - 20, 5, 35);
-    }
+    const readiness = clamp(Math.round((cloudRunFit * 0.45) + (gkeFit * 0.40) + ((100 - vmFit) * 0.15)), 0, 100);
 
     let status = "";
     let badgeBg = "";
@@ -431,19 +490,19 @@
     let nextStep = "";
 
     if (cloudRunFit >= gkeFit && cloudRunFit >= vmFit) {
-      status = "Cloud Run Ready";
+      status = "Cloud Run Candidate";
       platform = "Cloud Run";
       badgeBg = "rgba(16, 185, 129, 0.16)";
       badgeColor = "#10b981";
 
       meaning =
-        "This application appears suitable for serverless container deployment. It is likely stateless, HTTP-based, able to scale dynamically, and has limited dependency on the underlying server.";
+        "This application appears suitable for serverless container deployment. It is likely request-based, has limited infrastructure dependency, can benefit from autoscaling, and does not require heavy platform management.";
 
       path =
-        "Package the application into a container image, externalize session and file storage, use managed services such as Cloud SQL or Cloud Storage, and deploy to Cloud Run with autoscaling enabled.";
+        "Containerize the application, externalize sessions and files, move persistent data into managed services, validate startup time, and deploy using Cloud Run with autoscaling and managed observability.";
 
       nextStep =
-        "Run a containerization assessment and validate runtime configuration, database connectivity, secrets handling, and production deployment requirements.";
+        "Run a containerization assessment and validate application runtime, secrets handling, database connectivity, network access, deployment pipeline, and production readiness.";
     } else if (gkeFit >= cloudRunFit && gkeFit >= vmFit) {
       status = "GKE Candidate";
       platform = "GKE Autopilot";
@@ -451,13 +510,13 @@
       badgeColor = "#60a5fa";
 
       meaning =
-        "This application has modernization potential but may require more platform control than Cloud Run. It may involve multiple components, background workers, private connectivity, or orchestration needs.";
+        "This application shows modernization potential but may require more control than Cloud Run. This may be due to application structure, networking, operational requirements, background processing, or platform governance needs.";
 
       path =
-        "Containerize each component, separate web services from workers and scheduled jobs, use Artifact Registry, deploy to GKE Autopilot, and integrate with managed services such as Cloud SQL, Cloud Storage, Secret Manager, and Cloud Monitoring.";
+        "Containerize application components, separate web services from workers and scheduled jobs, define service boundaries, use Artifact Registry, deploy to GKE Autopilot, and integrate with Cloud SQL, Cloud Storage, Secret Manager, Cloud Monitoring, and IAM.";
 
       nextStep =
-        "Conduct an application discovery workshop to map components, dependencies, network flows, deployment model, and sizing requirements before designing the GKE target architecture.";
+        "Conduct an application discovery workshop to map components, dependencies, network flows, DevOps capability, compliance requirements, and target GKE architecture.";
     } else {
       status = "Phased Modernization";
       platform = "Compute Engine first, then containerize gradually";
@@ -465,16 +524,16 @@
       badgeColor = "#f59e0b";
 
       meaning =
-        "This application still appears to have strong VM characteristics such as local state, persistent disk dependency, OS-level integration, slow startup, or tightly coupled services.";
+        "This application still appears to have strong VM characteristics. It may depend on local storage, OS-level configuration, custom protocols, strict isolation, or business requirements that favor stability over immediate platform change.";
 
       path =
-        "Start with rehost or stabilize on Compute Engine, identify OS and storage dependencies, externalize configuration and data, separate tightly coupled components, then reassess for GKE or Cloud Run.";
+        "Stabilize or rehost the workload on Compute Engine first, document dependencies, externalize configuration and data, reduce OS coupling, separate tightly coupled components, then reassess for GKE or Cloud Run.";
 
       nextStep =
-        "Perform a technical dependency review before attempting container migration. Do not move this workload directly to Cloud Run or GKE without refactoring validation.";
+        "Perform a technical dependency and compliance review before attempting container migration. Avoid moving this workload directly to Cloud Run or GKE without refactoring validation.";
     }
 
-    document.getElementById("scoreValue").textContent = normalized + "%";
+    document.getElementById("scoreValue").textContent = readiness + "%";
 
     const badge = document.getElementById("statusBadge");
     badge.textContent = status;
@@ -482,7 +541,7 @@
     badge.style.color = badgeColor;
 
     document.getElementById("scoreSummary").textContent =
-      `This workload shows ${normalized}% modernization readiness based on state handling, HTTP access, storage dependency, OS integration, application structure, traffic behavior, startup time, networking, and always-on requirements.`;
+      `This workload shows ${readiness}% modernization readiness based on architecture pattern, protocol requirement, state handling, storage dependency, OS integration, traffic behavior, startup time, compliance needs, operational maturity, and business goal.`;
 
     document.getElementById("cloudRunPercent").textContent = cloudRunFit + "%";
     document.getElementById("gkePercent").textContent = gkeFit + "%";
