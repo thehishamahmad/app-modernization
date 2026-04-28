@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VM to Container Modernization Advisor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="hero">
+  <nav class="nav">
+    <a href="https://hisham-ahmad.com/" class="brand">Hisham Ahmad</a>
+    <a href="https://hisham-ahmad.com/" class="home">Home</a>
+  </nav>
+
+  <div class="hero-content">
+    <p class="eyebrow">Application Modernization Assessment</p>
+    <h1>VM to Container Modernization Advisor</h1>
+    <p class="subtitle">
+      Assess your VM-based application and discover whether it is best suited for Cloud Run,
+      GKE, or a phased modernization approach.
+    </p>
+    <a href="#assessment" class="btn-primary">Start Assessment</a>
+  </div>
+</header>
+
+<main>
+  <section class="section intro">
+    <h2>What this tool does</h2>
+    <p>
+      This advisor helps evaluate whether an existing VM-hosted application is ready to be
+      modernized into containers. It reviews application structure, storage behavior, runtime
+      dependency, traffic pattern, operating system dependency, and platform fit.
+    </p>
+  </section>
+
+  <section id="assessment" class="section card">
+    <h2>Assessment Questions</h2>
+    <p class="section-note">
+      Select the answer that best represents your current application.
+    </p>
+
+    <form id="advisorForm">
+
+      <div class="question">
+        <label>1. Does your application store user data, sessions, or files directly on the server it runs on?</label>
+        <p class="hint">
+          This helps determine whether the application is stateless or stateful. Cloud Run is best suited for applications that store data externally, such as in a database, object storage, or cache.
+        </p>
+        <select name="stateHandling">
+          <option value="20">No, everything is stored externally</option>
+          <option value="5">Some data is stored locally</option>
+          <option value="-20">Yes, most data is stored on the server itself</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>2. Is the application accessed through HTTP or HTTPS?</label>
+        <p class="hint">
+          Web applications and APIs that use HTTP or HTTPS are usually easier to modernize into Cloud Run or GKE.
+        </p>
+        <select name="httpAccess">
+          <option value="20">Yes</option>
+          <option value="5">Partially</option>
+          <option value="-10">No</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>3. Does the application require persistent local disk storage?</label>
+        <p class="hint">
+          Applications that depend on local server storage usually need changes before moving to Cloud Run or containers.
+        </p>
+        <select name="localDisk">
+          <option value="15">No</option>
+          <option value="-10">Only temporary files</option>
+          <option value="-25">Yes, persistent local files are required</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>4. Is your application tightly integrated with the underlying operating system?</label>
+        <p class="hint">
+          Examples include specific OS settings, drivers, system packages, registry settings, local services, or server-level configuration.
+        </p>
+        <select name="osDependency">
+          <option value="15">No</option>
+          <option value="-10">Some dependency</option>
+          <option value="-30">Yes, strong OS dependency</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>5. How is your application structured today?</label>
+        <p class="hint">
+          This helps determine whether the application is better suited for Cloud Run as a simple service, or GKE when multiple components need more control and orchestration.
+        </p>
+        <select name="appStructure">
+          <option value="20">Single application, such as one web app or one API</option>
+          <option value="10">A few components, such as web app, backend, and worker</option>
+          <option value="-5">Multiple tightly connected components</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>6. Does the application run background jobs, batch processes, or scheduled tasks?</label>
+        <p class="hint">
+          Background jobs can still be modernized, but they may need to be separated from the main application.
+        </p>
+        <select name="backgroundJobs">
+          <option value="10">No</option>
+          <option value="0">Yes, but they can be separated</option>
+          <option value="-15">Yes, and they are tightly coupled with the application</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>7. How does the application traffic behave?</label>
+        <p class="hint">
+          Applications with variable or bursty traffic can benefit from autoscaling platforms such as Cloud Run or GKE.
+        </p>
+        <select name="trafficPattern">
+          <option value="20">Variable or bursty traffic</option>
+          <option value="10">Steady traffic</option>
+          <option value="-5">Requires fixed always-on capacity</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>8. How long does your application take to start and become ready to serve requests?</label>
+        <p class="hint">
+          Startup time matters because serverless platforms like Cloud Run may start new instances automatically when traffic arrives.
+        </p>
+        <select name="startupTime">
+          <option value="15">Fast, within a few seconds</option>
+          <option value="5">Moderate, around 10 to 30 seconds</option>
+          <option value="-15">Slow, more than 30 seconds</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>9. Does the application require custom networking or complex internal routing?</label>
+        <p class="hint">
+          Simple network requirements are easier for Cloud Run, while complex routing may be better suited for GKE or VM-based designs.
+        </p>
+        <select name="networking">
+          <option value="15">No, simple public or private access is enough</option>
+          <option value="5">Some private connectivity is required</option>
+          <option value="-10">Yes, complex internal routing is required</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>10. Does your application require always-on availability and cannot scale down when idle?</label>
+        <p class="hint">
+          Cloud Run is most cost-effective when workloads can scale down during idle periods. Always-on workloads may be better suited for GKE or Compute Engine.
+        </p>
+        <select name="alwaysOn">
+          <option value="20">No, it can scale down when idle</option>
+          <option value="5">Sometimes required</option>
+          <option value="-15">Yes, it must always be running</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-primary full">Generate Recommendation</button>
+    </form>
+  </section>
+
+  <section id="result" class="section result hidden">
+    <p class="eyebrow">Assessment Result</p>
+    <h2 id="resultTitle"></h2>
+
+    <div class="score-box">
+      <span>Modernization Readiness Score</span>
+      <strong id="scoreValue"></strong>
+    </div>
+
+    <div class="visual-bars">
+      <h3>Platform Fit Score</h3>
+
+      <div class="bar-row">
+        <div class="bar-label">
+          <span>Cloud Run Fit</span>
+          <strong id="cloudRunPercent">0%</strong>
+        </div>
+        <div class="bar-track">
+          <div id="cloudRunBar" class="bar-fill"></div>
+        </div>
+      </div>
+
+      <div class="bar-row">
+        <div class="bar-label">
+          <span>GKE Fit</span>
+          <strong id="gkePercent">0%</strong>
+        </div>
+        <div class="bar-track">
+          <div id="gkeBar" class="bar-fill"></div>
+        </div>
+      </div>
+
+      <div class="bar-row">
+        <div class="bar-label">
+          <span>VM / Phased Approach Fit</span>
+          <strong id="vmPercent">0%</strong>
+        </div>
+        <div class="bar-track">
+          <div id="vmBar" class="bar-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Recommended Platform</h3>
+    <p id="platform"></p>
+
+    <h3>Reasoning</h3>
+    <p id="reasoning"></p>
+
+    <h3>Suggested Modernization Path</h3>
+    <ul id="path"></ul>
+
+    <h3>Recommended Next Engagement</h3>
+    <ul>
+      <li>Application Discovery Workshop</li>
+      <li>Containerization Assessment</li>
+      <li>GKE / Cloud Run Sizing</li>
+      <li>Pilot Migration or Proof of Concept</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p>© Hisham Ahmad — VM to Container Modernization Advisor</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
