@@ -543,21 +543,3 @@ footer {
     align-items: flex-start;
   }
 }
-
-/* Force center assessment action buttons */
-.assessment-container form {
-  width: 100%;
-}
-
-.assessment-container .action-bar {
-  width: 100%;
-  display: flex;
-  justify-content: center !important;
-  align-items: center;
-  gap: 1rem;
-  margin: 2rem auto 0;
-}
-
-.assessment-container .action-bar .btn {
-  min-width: 180px;
-}
