@@ -3,15 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VM to Container Modernization Advisor</title>
-  <link rel="stylesheet" href="./style.css" />
+  <title>VM to Container Modernization Advisor | Hisham Ahmad</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
+
 <body>
 
-<header class="hero">
-  <nav class="top-nav">
-    <a href="https://hisham-ahmad.com/" class="brand">
-      Hisham <span>Ahmad</span>
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="brand-link">
+      <span class="brand-white">Hisham</span>
+      <span class="brand-blue">Ahmad</span>
     </a>
 
     <div class="nav-links">
@@ -20,237 +27,513 @@
       <a href="#focus">Focus Areas</a>
       <a href="#assessment">Assessment</a>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <div class="hero-content">
-    <div class="hero-pill">APPLICATION MODERNIZATION FRAMEWORK</div>
+<header class="hero">
+  <div class="container">
+    <span class="badge-top">Application Modernization Framework</span>
 
-    <h1>
-      VM to Container<br />
-      Modernization Advisor
-    </h1>
+    <h1>VM to Container Modernization Advisor</h1>
 
-    <p class="subtitle">
+    <p>
       Assess your VM-based application and discover whether it is best suited for Cloud Run,
       GKE, or a phased modernization approach. This assessment provides a practical,
       business-focused view of your application modernization readiness.
     </p>
 
     <div class="hero-actions">
-      <a href="#overview" class="btn-primary">Explore Assessment Scope</a>
-      <a href="#assessment" class="btn-secondary">Start Assessment</a>
+      <a href="#overview" class="btn btn-primary">Explore Assessment Scope</a>
+      <a href="#assessment" class="btn btn-secondary">Start Assessment</a>
     </div>
   </div>
 </header>
 
-<main>
-  <section class="section intro">
-    <h2>What this tool does</h2>
-    <p>
+<main class="container">
+
+  <section id="overview">
+    <div class="domain-header">
+      <h2>Overview</h2>
+      <div class="domain-line"></div>
+    </div>
+
+    <p class="section-intro">
       This advisor helps evaluate whether an existing VM-hosted application is ready to be
-      modernized into containers. It reviews application structure, storage behavior, runtime
-      dependency, traffic pattern, operating system dependency, and platform fit.
+      modernized into containers. It reviews application structure, state handling, storage
+      dependency, startup behavior, operating system dependency, traffic profile, and platform fit.
     </p>
   </section>
 
-  <section id="assessment" class="section card">
-    <h2>Assessment Questions</h2>
-    <p class="section-note">
-      Select the answer that best represents your current application.
+  <section id="why">
+    <div class="domain-header">
+      <h2>Why This Matters</h2>
+      <div class="domain-line"></div>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>Avoid Wrong Platform Fit</h3>
+        <p>
+          Not every VM workload should move directly to Cloud Run or GKE. This tool helps identify
+          whether the application is ready or still needs refactoring.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Reduce Migration Risk</h3>
+        <p>
+          Applications with local state, OS dependency, slow startup, or tight coupling may fail
+          if moved too quickly into containers.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Guide Cloud Run vs GKE</h3>
+        <p>
+          Simple stateless web applications may fit Cloud Run, while multi-component workloads may
+          require GKE Autopilot.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Support Discovery Workshop</h3>
+        <p>
+          The result can be used as an early discussion input for application discovery,
+          modernization planning, and sizing.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="focus">
+    <div class="domain-header">
+      <h2>Focus Areas</h2>
+      <div class="domain-line"></div>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>State & Storage</h3>
+        <p>
+          Determines whether user sessions, files, or runtime data are stored externally or tied
+          directly to the VM.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Runtime Dependency</h3>
+        <p>
+          Checks whether the application depends heavily on OS-level settings, drivers, local
+          services, or system packages.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Application Structure</h3>
+        <p>
+          Reviews whether the application is a single service, a few components, or a tightly
+          connected legacy stack.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Scaling Behavior</h3>
+        <p>
+          Evaluates whether the workload can scale dynamically, handle bursty traffic, or must
+          remain always on.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="assessment">
+    <div class="domain-header">
+      <h2>Interactive Assessment</h2>
+      <div class="domain-line"></div>
+    </div>
+
+    <p class="section-intro">
+      Complete the questions below to estimate application modernization readiness and identify
+      whether Cloud Run, GKE, or a phased VM-to-container approach is more suitable.
     </p>
 
-    <form id="advisorForm">
+    <div class="assessment-container">
+      <form id="advisorForm">
 
-      <div class="question">
-        <label>1. Does your application store user data, sessions, or files directly on the server it runs on?</label>
-        <p class="hint">
-          This helps determine whether the application is stateless or stateful. Cloud Run is best suited for applications that store data externally, such as in a database, object storage, or cache.
-        </p>
-        <select name="stateHandling">
-          <option value="20">No, everything is stored externally</option>
-          <option value="5">Some data is stored locally</option>
-          <option value="-20">Yes, most data is stored on the server itself</option>
-        </select>
-      </div>
+        <div class="question-group">
+          <h3>01. Application State & Access</h3>
 
-      <div class="question">
-        <label>2. Is the application accessed through HTTP or HTTPS?</label>
-        <p class="hint">
-          Web applications and APIs that use HTTP or HTTPS are usually easier to modernize into Cloud Run or GKE.
-        </p>
-        <select name="httpAccess">
-          <option value="20">Yes</option>
-          <option value="5">Partially</option>
-          <option value="-10">No</option>
-        </select>
-      </div>
+          <div class="field-grid">
+            <div class="field">
+              <label>Does your application store user data, sessions, or files directly on the server it runs on?</label>
+              <select name="stateHandling">
+                <option value="">Select</option>
+                <option value="20">No, everything is stored externally</option>
+                <option value="5">Some data is stored locally</option>
+                <option value="-20">Yes, most data is stored on the server itself</option>
+              </select>
+            </div>
 
-      <div class="question">
-        <label>3. Does the application require persistent local disk storage?</label>
-        <p class="hint">
-          Applications that depend on local server storage usually need changes before moving to Cloud Run or containers.
-        </p>
-        <select name="localDisk">
-          <option value="15">No</option>
-          <option value="-10">Only temporary files</option>
-          <option value="-25">Yes, persistent local files are required</option>
-        </select>
-      </div>
+            <div class="field">
+              <label>Is the application accessed through HTTP or HTTPS?</label>
+              <select name="httpAccess">
+                <option value="">Select</option>
+                <option value="20">Yes</option>
+                <option value="5">Partially</option>
+                <option value="-10">No</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
-      <div class="question">
-        <label>4. Is your application tightly integrated with the underlying operating system?</label>
-        <p class="hint">
-          Examples include specific OS settings, drivers, system packages, registry settings, local services, or server-level configuration.
-        </p>
-        <select name="osDependency">
-          <option value="15">No</option>
-          <option value="-10">Some dependency</option>
-          <option value="-30">Yes, strong OS dependency</option>
-        </select>
-      </div>
+        <div class="question-group">
+          <h3>02. Storage & OS Dependency</h3>
 
-      <div class="question">
-        <label>5. How is your application structured today?</label>
-        <p class="hint">
-          This helps determine whether the application is better suited for Cloud Run as a simple service, or GKE when multiple components need more control and orchestration.
-        </p>
-        <select name="appStructure">
-          <option value="20">Single application, such as one web app or one API</option>
-          <option value="10">A few components, such as web app, backend, and worker</option>
-          <option value="-5">Multiple tightly connected components</option>
-        </select>
-      </div>
+          <div class="field-grid">
+            <div class="field">
+              <label>Does the application require persistent local disk storage?</label>
+              <select name="localDisk">
+                <option value="">Select</option>
+                <option value="15">No</option>
+                <option value="-10">Only temporary files</option>
+                <option value="-25">Yes, persistent local files are required</option>
+              </select>
+            </div>
 
-      <div class="question">
-        <label>6. Does the application run background jobs, batch processes, or scheduled tasks?</label>
-        <p class="hint">
-          Background jobs can still be modernized, but they may need to be separated from the main application.
-        </p>
-        <select name="backgroundJobs">
-          <option value="10">No</option>
-          <option value="0">Yes, but they can be separated</option>
-          <option value="-15">Yes, and they are tightly coupled with the application</option>
-        </select>
-      </div>
+            <div class="field">
+              <label>Is your application tightly integrated with the underlying operating system?</label>
+              <select name="osDependency">
+                <option value="">Select</option>
+                <option value="15">No</option>
+                <option value="-10">Some dependency</option>
+                <option value="-30">Yes, strong OS dependency</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
-      <div class="question">
-        <label>7. How does the application traffic behave?</label>
-        <p class="hint">
-          Applications with variable or bursty traffic can benefit from autoscaling platforms such as Cloud Run or GKE.
-        </p>
-        <select name="trafficPattern">
-          <option value="20">Variable or bursty traffic</option>
-          <option value="10">Steady traffic</option>
-          <option value="-5">Requires fixed always-on capacity</option>
-        </select>
-      </div>
+        <div class="question-group">
+          <h3>03. Application Structure</h3>
 
-      <div class="question">
-        <label>8. How long does your application take to start and become ready to serve requests?</label>
-        <p class="hint">
-          Startup time matters because serverless platforms like Cloud Run may start new instances automatically when traffic arrives.
-        </p>
-        <select name="startupTime">
-          <option value="15">Fast, within a few seconds</option>
-          <option value="5">Moderate, around 10 to 30 seconds</option>
-          <option value="-15">Slow, more than 30 seconds</option>
-        </select>
-      </div>
+          <div class="field-grid">
+            <div class="field">
+              <label>How is your application structured today?</label>
+              <select name="appStructure">
+                <option value="">Select</option>
+                <option value="20">Single application, such as one web app or one API</option>
+                <option value="10">A few components, such as web app, backend, and worker</option>
+                <option value="-5">Multiple tightly connected components</option>
+              </select>
+            </div>
 
-      <div class="question">
-        <label>9. Does the application require custom networking or complex internal routing?</label>
-        <p class="hint">
-          Simple network requirements are easier for Cloud Run, while complex routing may be better suited for GKE or VM-based designs.
-        </p>
-        <select name="networking">
-          <option value="15">No, simple public or private access is enough</option>
-          <option value="5">Some private connectivity is required</option>
-          <option value="-10">Yes, complex internal routing is required</option>
-        </select>
-      </div>
+            <div class="field">
+              <label>Does the application run background jobs, batch processes, or scheduled tasks?</label>
+              <select name="backgroundJobs">
+                <option value="">Select</option>
+                <option value="10">No</option>
+                <option value="0">Yes, but they can be separated</option>
+                <option value="-15">Yes, and they are tightly coupled with the application</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
-      <div class="question">
-        <label>10. Does your application require always-on availability and cannot scale down when idle?</label>
-        <p class="hint">
-          Cloud Run is most cost-effective when workloads can scale down during idle periods. Always-on workloads may be better suited for GKE or Compute Engine.
-        </p>
-        <select name="alwaysOn">
-          <option value="20">No, it can scale down when idle</option>
-          <option value="5">Sometimes required</option>
-          <option value="-15">Yes, it must always be running</option>
-        </select>
-      </div>
+        <div class="question-group">
+          <h3>04. Traffic, Startup & Networking</h3>
 
-      <button type="submit" class="btn-primary full">Generate Recommendation</button>
-    </form>
+          <div class="field-grid">
+            <div class="field">
+              <label>How does the application traffic behave?</label>
+              <select name="trafficPattern">
+                <option value="">Select</option>
+                <option value="20">Variable or bursty traffic</option>
+                <option value="10">Steady traffic</option>
+                <option value="-5">Requires fixed always-on capacity</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>How long does your application take to start and become ready to serve requests?</label>
+              <select name="startupTime">
+                <option value="">Select</option>
+                <option value="15">Fast, within a few seconds</option>
+                <option value="5">Moderate, around 10 to 30 seconds</option>
+                <option value="-15">Slow, more than 30 seconds</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Does the application require custom networking or complex internal routing?</label>
+              <select name="networking">
+                <option value="">Select</option>
+                <option value="15">No, simple public or private access is enough</option>
+                <option value="5">Some private connectivity is required</option>
+                <option value="-10">Yes, complex internal routing is required</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Does your application require always-on availability and cannot scale down when idle?</label>
+              <select name="alwaysOn">
+                <option value="">Select</option>
+                <option value="20">No, it can scale down when idle</option>
+                <option value="5">Sometimes required</option>
+                <option value="-15">Yes, it must always be running</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-bar">
+          <button type="button" class="btn btn-primary" onclick="calculateModernization()">Generate Recommendation</button>
+          <button type="button" class="btn btn-secondary" onclick="resetModernization()">Reset</button>
+        </div>
+
+      </form>
+    </div>
   </section>
 
-  <section id="result" class="section result hidden">
-    <p class="eyebrow">Assessment Result</p>
-    <h2 id="resultTitle"></h2>
+  <section id="results" class="results-dashboard">
+    <div class="glass-card">
+      <div class="results-grid">
 
-    <div class="score-box">
-      <span>Modernization Readiness Score</span>
-      <strong id="scoreValue"></strong>
+        <div class="score-card">
+          <p class="eyebrow-result">Modernization Readiness</p>
+          <h2 class="big-score" id="scoreValue">0%</h2>
+          <div id="statusBadge" class="status-badge">Pending</div>
+
+          <p class="summary-text" id="scoreSummary">
+            Complete the assessment to generate platform recommendation.
+          </p>
+
+          <div class="domain-breakdown">
+            <div class="domain-bar-container">
+              <div class="domain-bar-label">
+                <span>Cloud Run Fit</span>
+                <span id="cloudRunPercent">0%</span>
+              </div>
+              <div class="domain-bar-track">
+                <div id="cloudRunBar" class="domain-bar-fill"></div>
+              </div>
+            </div>
+
+            <div class="domain-bar-container">
+              <div class="domain-bar-label">
+                <span>GKE Fit</span>
+                <span id="gkePercent">0%</span>
+              </div>
+              <div class="domain-bar-track">
+                <div id="gkeBar" class="domain-bar-fill"></div>
+              </div>
+            </div>
+
+            <div class="domain-bar-container">
+              <div class="domain-bar-label">
+                <span>VM / Phased Fit</span>
+                <span id="vmPercent">0%</span>
+              </div>
+              <div class="domain-bar-track">
+                <div id="vmBar" class="domain-bar-fill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insights-column">
+          <div class="panel-block">
+            <h3>Recommended Platform</h3>
+            <p id="platformText"></p>
+          </div>
+
+          <div class="panel-block">
+            <h4>What This Means</h4>
+            <p id="meaningText"></p>
+          </div>
+
+          <div class="panel-block">
+            <h4>Suggested Modernization Path</h4>
+            <p id="pathText"></p>
+          </div>
+
+          <div class="panel-block">
+            <h4>Recommended Next Step</h4>
+            <p id="nextStepText"></p>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-secondary" onclick="window.print()">Print / Save PDF</button>
+            <button class="btn btn-primary" onclick="resetModernization()">Reset</button>
+          </div>
+        </div>
+
+      </div>
     </div>
-
-    <div class="visual-bars">
-      <h3>Platform Fit Score</h3>
-
-      <div class="bar-row">
-        <div class="bar-label">
-          <span>Cloud Run Fit</span>
-          <strong id="cloudRunPercent">0%</strong>
-        </div>
-        <div class="bar-track">
-          <div id="cloudRunBar" class="bar-fill"></div>
-        </div>
-      </div>
-
-      <div class="bar-row">
-        <div class="bar-label">
-          <span>GKE Fit</span>
-          <strong id="gkePercent">0%</strong>
-        </div>
-        <div class="bar-track">
-          <div id="gkeBar" class="bar-fill"></div>
-        </div>
-      </div>
-
-      <div class="bar-row">
-        <div class="bar-label">
-          <span>VM / Phased Approach Fit</span>
-          <strong id="vmPercent">0%</strong>
-        </div>
-        <div class="bar-track">
-          <div id="vmBar" class="bar-fill"></div>
-        </div>
-      </div>
-    </div>
-
-    <h3>Recommended Platform</h3>
-    <p id="platform"></p>
-
-    <h3>Reasoning</h3>
-    <p id="reasoning"></p>
-
-    <h3>Suggested Modernization Path</h3>
-    <ul id="path"></ul>
-
-    <h3>Recommended Next Engagement</h3>
-    <ul>
-      <li>Application Discovery Workshop</li>
-      <li>Containerization Assessment</li>
-      <li>GKE / Cloud Run Sizing</li>
-      <li>Pilot Migration or Proof of Concept</li>
-    </ul>
   </section>
+
 </main>
 
 <footer>
-  <p>© Hisham Ahmad — VM to Container Modernization Advisor</p>
+  &copy; 2026 Hisham Ahmad Advisory. Prepared for application modernization assessment.
 </footer>
 
-<script src="script.js"></script>
+<script>
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  function calculateModernization() {
+    const form = document.getElementById("advisorForm");
+    const selects = form.querySelectorAll("select");
+
+    let rawScore = 0;
+    let completed = true;
+
+    selects.forEach(select => {
+      if (select.value === "") {
+        completed = false;
+      } else {
+        rawScore += Number(select.value);
+      }
+    });
+
+    if (!completed) {
+      alert("Please complete all fields before generating the recommendation.");
+      return;
+    }
+
+    const maxScore = 175;
+    const normalized = clamp(Math.round((rawScore / maxScore) * 100), 0, 100);
+
+    let cloudRunFit = 0;
+    let gkeFit = 0;
+    let vmFit = 0;
+
+    if (normalized >= 75) {
+      cloudRunFit = normalized;
+      gkeFit = clamp(100 - normalized + 35, 0, 100);
+      vmFit = clamp(100 - normalized, 5, 35);
+    } else if (normalized >= 45) {
+      gkeFit = normalized;
+      cloudRunFit = clamp(normalized - 20, 10, 70);
+      vmFit = clamp(100 - normalized, 20, 65);
+    } else {
+      vmFit = clamp(100 - normalized, 55, 100);
+      gkeFit = clamp(normalized, 10, 55);
+      cloudRunFit = clamp(normalized - 20, 5, 35);
+    }
+
+    let status = "";
+    let badgeBg = "";
+    let badgeColor = "";
+    let platform = "";
+    let meaning = "";
+    let path = "";
+    let nextStep = "";
+
+    if (cloudRunFit >= gkeFit && cloudRunFit >= vmFit) {
+      status = "Cloud Run Ready";
+      platform = "Cloud Run";
+      badgeBg = "rgba(16, 185, 129, 0.16)";
+      badgeColor = "#10b981";
+
+      meaning =
+        "This application appears suitable for serverless container deployment. It is likely stateless, HTTP-based, able to scale dynamically, and has limited dependency on the underlying server.";
+
+      path =
+        "Package the application into a container image, externalize session and file storage, use managed services such as Cloud SQL or Cloud Storage, and deploy to Cloud Run with autoscaling enabled.";
+
+      nextStep =
+        "Run a containerization assessment and validate runtime configuration, database connectivity, secrets handling, and production deployment requirements.";
+    } else if (gkeFit >= cloudRunFit && gkeFit >= vmFit) {
+      status = "GKE Candidate";
+      platform = "GKE Autopilot";
+      badgeBg = "rgba(59, 130, 246, 0.16)";
+      badgeColor = "#60a5fa";
+
+      meaning =
+        "This application has modernization potential but may require more platform control than Cloud Run. It may involve multiple components, background workers, private connectivity, or orchestration needs.";
+
+      path =
+        "Containerize each component, separate web services from workers and scheduled jobs, use Artifact Registry, deploy to GKE Autopilot, and integrate with managed services such as Cloud SQL, Cloud Storage, Secret Manager, and Cloud Monitoring.";
+
+      nextStep =
+        "Conduct an application discovery workshop to map components, dependencies, network flows, deployment model, and sizing requirements before designing the GKE target architecture.";
+    } else {
+      status = "Phased Modernization";
+      platform = "Compute Engine first, then containerize gradually";
+      badgeBg = "rgba(245, 158, 11, 0.16)";
+      badgeColor = "#f59e0b";
+
+      meaning =
+        "This application still appears to have strong VM characteristics such as local state, persistent disk dependency, OS-level integration, slow startup, or tightly coupled services.";
+
+      path =
+        "Start with rehost or stabilize on Compute Engine, identify OS and storage dependencies, externalize configuration and data, separate tightly coupled components, then reassess for GKE or Cloud Run.";
+
+      nextStep =
+        "Perform a technical dependency review before attempting container migration. Do not move this workload directly to Cloud Run or GKE without refactoring validation.";
+    }
+
+    document.getElementById("scoreValue").textContent = normalized + "%";
+
+    const badge = document.getElementById("statusBadge");
+    badge.textContent = status;
+    badge.style.background = badgeBg;
+    badge.style.color = badgeColor;
+
+    document.getElementById("scoreSummary").textContent =
+      `This workload shows ${normalized}% modernization readiness based on state handling, HTTP access, storage dependency, OS integration, application structure, traffic behavior, startup time, networking, and always-on requirements.`;
+
+    document.getElementById("cloudRunPercent").textContent = cloudRunFit + "%";
+    document.getElementById("gkePercent").textContent = gkeFit + "%";
+    document.getElementById("vmPercent").textContent = vmFit + "%";
+
+    document.getElementById("cloudRunBar").style.width = cloudRunFit + "%";
+    document.getElementById("gkeBar").style.width = gkeFit + "%";
+    document.getElementById("vmBar").style.width = vmFit + "%";
+
+    document.getElementById("platformText").textContent = platform;
+    document.getElementById("meaningText").textContent = meaning;
+    document.getElementById("pathText").textContent = path;
+    document.getElementById("nextStepText").textContent = nextStep;
+
+    document.getElementById("results").style.display = "block";
+
+    window.scrollTo({
+      top: document.getElementById("results").offsetTop - 90,
+      behavior: "smooth"
+    });
+  }
+
+  function resetModernization() {
+    document.getElementById("advisorForm").reset();
+
+    document.getElementById("scoreValue").textContent = "0%";
+    document.getElementById("statusBadge").textContent = "Pending";
+    document.getElementById("scoreSummary").textContent =
+      "Complete the assessment to generate platform recommendation.";
+
+    document.getElementById("cloudRunPercent").textContent = "0%";
+    document.getElementById("gkePercent").textContent = "0%";
+    document.getElementById("vmPercent").textContent = "0%";
+
+    document.getElementById("cloudRunBar").style.width = "0%";
+    document.getElementById("gkeBar").style.width = "0%";
+    document.getElementById("vmBar").style.width = "0%";
+
+    document.getElementById("platformText").textContent = "";
+    document.getElementById("meaningText").textContent = "";
+    document.getElementById("pathText").textContent = "";
+    document.getElementById("nextStepText").textContent = "";
+
+    document.getElementById("results").style.display = "none";
+
+    window.scrollTo({
+      top: document.getElementById("assessment").offsetTop - 90,
+      behavior: "smooth"
+    });
+  }
+</script>
+
 </body>
 </html>
